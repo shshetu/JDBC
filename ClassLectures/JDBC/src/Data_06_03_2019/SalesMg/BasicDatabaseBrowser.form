@@ -86,9 +86,9 @@
                   <Component id="jTextFieldPort" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="sdfdsf" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextFieldDbName" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTextFieldDbName" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">

@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Date_05_03_2019.Metadata;
+package Date_07_03_2019;
 
+import Date_05_03_2019.Metadata.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -22,8 +23,8 @@ static String host,dbname,username,password,port;
     public static Connection getDBConnection() {
         try {
             //conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "1234");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","1234");
-            System.out.println("Connected");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/shetu","root","1234");
+            System.out.println("Connected!");
             return conn;
         } catch (SQLException ex) {
             Logger.getLogger(CustomDBConnection.class.getName()).log(Level.SEVERE, null, ex);

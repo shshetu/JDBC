@@ -17,7 +17,7 @@ public class RoleDaoImp {
         String sql = "insert into role(role_name) values(?))";
         try {
             //4.execute statement
-            PreparedStatement pstm =  
+          
         } catch (Exception e) {
         }
     }

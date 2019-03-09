@@ -22,7 +22,7 @@ public class BasicDatabaseBrowser extends javax.swing.JFrame {
 
     public BasicDatabaseBrowser() {
         initComponents();
-        conn = CustomDBConnection.getDBConnection(jTextFieldHost.getText().trim(), jTextFieldPort.getText().trim(), jTextFieldDbName.getText().trim(), jTextFieldUsername.getText().trim(), jTextFieldPassword.getText().trim());
+     //   conn = CustomDBConnection.getDBConnection(jTextFieldHost.getText().trim(), jTextFieldPort.getText().trim(), jTextFieldDbName.getText().trim(), jTextFieldUsername.getText().trim(), jTextFieldPassword.getText().trim());
     }
 
     /**
