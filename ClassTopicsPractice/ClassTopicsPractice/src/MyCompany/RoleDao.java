@@ -5,7 +5,7 @@
  */
 package MyCompany;
 
-import SalesManagement.*;
+
 import java.util.List;
 
 /**
