@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package SalesManagement;
+package MyCompany;
+
+
 
 /**
  *
@@ -12,7 +14,9 @@ package SalesManagement;
 public class ConnectionTest {
    //main method must
     public static void main(String[] args) {
-        RoleDao roledao=new RoleDaoImp();
-        roledao.createTable();
+        
+       CustomDBConnection.getDBConnection();
+       RoleDao roleDao = new RoleDaoImp();
+       roleDao.createTable();
     }
 }
