@@ -12,6 +12,7 @@ package SalesManagement;
 public class ConnectionTest {
    //main method must
     public static void main(String[] args) {
+        
         RoleDao roledao=new RoleDaoImp();
         roledao.createTable();
     }
