@@ -7,7 +7,7 @@ public class CustomDBConnection {
 
 public static Connection getConnection() {
 	Connection conn = null;
-	String dbname = "salesmgmtfirst";
+	String dbname = "salesmgmt";
 	try {
 		conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+dbname,"root","1234");
 		System.out.println("Connected to the database: "+dbname);
