@@ -14,7 +14,7 @@ public class RoleDaoImp implements RoleDao {
     @Override
     public void createTable() {
         // make query
-        String sql = "create table if not exists employees(id int(20) primary key auto_increment,role_name varchar(30))";
+        String sql = "create table if not exists employees(id int(11) primary key auto_increment,role_name varchar(30))";
         // create Statement
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);

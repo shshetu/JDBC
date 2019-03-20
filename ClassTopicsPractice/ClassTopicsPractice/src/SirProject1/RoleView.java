@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package SalesMgmt;
+package SirProject1;
 
+import SalesMgmt.*;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -20,32 +21,27 @@ public class RoleView extends javax.swing.JFrame {
      */
     public RoleView() {
         initComponents();
-        RoleDao r = new RoleDaoImp();
-        r.createTable();
-        displayRoleListIntoTable();
+        new RoleDaoImp().createTable();
+        displayDataToTable();
     }
-    //show into table
+    //show data from database to table
 
-    public void displayRoleListIntoTable() {
+    public void displayDataToTable() {
         clearTable();
-        // create object of RoleDao imp
-        RoleDao dao = new RoleDaoImp();
-
-        //we want to add values to the table
-        List<Role> list = dao.getRoles();
-        //add to the table
+        RoleDao role = new RoleDaoImp();
         DefaultTableModel model = (DefaultTableModel) jTableDisplay.getModel();
-        /// We create the Object type array
-        Object[] cols = new Object[2];
-        //take values into the array
+        //catch data from database
+        List<Role> list = role.getRoles();
+        Object cols[] = new Object[2];
         for (int i = 0; i < list.size(); i++) {
             cols[0] = list.get(i).getId();
-            cols[1] = list.get(i).getName();
+            cols[1] = list.get(i).getRoleName();
             model.addRow(cols);
         }
-    }
-    //clear table
 
+    }
+
+    //clear the table
     public void clearTable() {
         DefaultTableModel model = (DefaultTableModel) jTableDisplay.getModel();
         model.setRowCount(0);
@@ -62,12 +58,14 @@ public class RoleView extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextFieldRoleName = new javax.swing.JTextField();
+        jTextFieldId = new javax.swing.JTextField();
         jButtonUpdate = new javax.swing.JButton();
         jButtonDelete = new javax.swing.JButton();
         jButtonInsert = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableDisplay = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
+        jTextFieldRoleName = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,7 +73,7 @@ public class RoleView extends javax.swing.JFrame {
         jLabel1.setText("Sales Management");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("Role Name");
+        jLabel2.setText("ID:");
 
         jButtonUpdate.setText("Update");
         jButtonUpdate.addActionListener(new java.awt.event.ActionListener() {
@@ -113,6 +111,9 @@ public class RoleView extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTableDisplay);
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setText("Role Name:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -120,7 +121,7 @@ public class RoleView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
+                        .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButtonInsert)
@@ -129,26 +130,34 @@ public class RoleView extends javax.swing.JFrame {
                                 .addGap(26, 26, 26)
                                 .addComponent(jButtonDelete))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2))
                                 .addGap(32, 32, 32)
-                                .addComponent(jTextFieldRoleName, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldRoleName, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(209, 209, 209)
                         .addComponent(jLabel1)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
                             .addComponent(jTextFieldRoleName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(34, 34, 34)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -156,72 +165,74 @@ public class RoleView extends javax.swing.JFrame {
                             .addComponent(jButtonDelete)
                             .addComponent(jButtonInsert)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInsertActionPerformed
-        //Create object of RoleDaoImp()
-        RoleDao obj = new RoleDaoImp();
-        //Create object from where to collect
-        String roleName = jTextFieldRoleName.getText().trim();
-        //validate
-        if (roleName.length() < 4) {
-            System.out.println("Enter At least 4 characters!");
+        RoleDao role = new RoleDaoImp();
+        int id = Integer.parseInt(jTextFieldId.getText().trim());
+        String name = jTextFieldRoleName.getText().trim();
+
+        if (String.valueOf(id).length() < 3) {
+            JOptionPane.showMessageDialog(null, "Id should be atleast 3 characters!");
+        } else if (name.length() < 4) {
+            JOptionPane.showMessageDialog(null, "Name should be atleast 4 characters!");
         } else {
             try {
-                //Then send the collected rolename to the RoleDaoImp class 
-                //and then add to the table using getRoles() method
-                //We are first checking if there is any duplicate value
-                //Role type field
-                Role existRole = obj.getRolebyName(roleName);
-                if (existRole.getName() != null) {
-                    JOptionPane.showMessageDialog(null, "Already exists the Rolename!");
-                } 
+                Role existRole = role.getRoleById(id);
+                if (existRole != null) {
+                    JOptionPane.showMessageDialog(null, "Such type of ID Already exists!");
+                } else {
+                    Role roles = new Role(id, name);
+                    role.insert(roles);
+                    displayDataToTable();
+                    JOptionPane.showMessageDialog(null, "Data inserted Successfully!");
+                }
             } catch (Exception e) {
-                 //send the value to the Role class
-                    Role role = new Role(roleName);
-                    //Now send the value to the RoleDaoImp class
-                    obj.insert(role);
-                    //Now send the value to the displayRoleListIntoTable() method
-                    displayRoleListIntoTable();
-                    JOptionPane.showMessageDialog(null, "Successfully Saved!");
-               
+                Role roles = new Role(id, name);
+                role.insert(roles);
+                displayDataToTable();
+                JOptionPane.showMessageDialog(null, "Data inserted Successfully!");
+
+
             }
         }
-
-
     }//GEN-LAST:event_jButtonInsertActionPerformed
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
-        // TODO add your handling code here:
-
-        RoleDao role = new RoleDaoImp();
-        role.delete(role.getRolebyId(selectedId));
-        displayRoleListIntoTable();
+RoleDao roledao = new RoleDaoImp();
+roledao.delete(roledao.getRoleById(selectedId));
+displayDataToTable();
+JOptionPane.showMessageDialog(null, "Delete Successfully!");
+jTextFieldId.setText("");
+jTextFieldRoleName.setText("");
     }//GEN-LAST:event_jButtonDeleteActionPerformed
-    private static int selectedId;
+    private int selectedId;
+//    private String selectedName;
+
     private void jTableDisplayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDisplayMouseClicked
-        // TODO add your handling code here:
         int i = jTableDisplay.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel) jTableDisplay.getModel();
         selectedId = Integer.parseInt(model.getValueAt(i, 0).toString().trim());
-        jTextFieldRoleName.setText(model.getValueAt(i, 1).toString().trim());
+       jTextFieldId.setText(model.getValueAt(i, 0).toString().trim());
+       jTextFieldRoleName.setText(model.getValueAt(i, 1).toString().trim());
+       
     }//GEN-LAST:event_jTableDisplayMouseClicked
 
     private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
-        // TODO add your handling code here:
-        RoleDao roledao = new RoleDaoImp();
-        Role role = new Role(selectedId, jTextFieldRoleName.getText().trim());
-        if (role != null) {
-            roledao.update(role);
-            displayRoleListIntoTable();
-            JOptionPane.showMessageDialog(null, "Success");
-        } else {
-            JOptionPane.showMessageDialog(null, "Enter A Role");
-        }
+RoleDao roleDao = new RoleDaoImp();
+Role role = new Role(selectedId,jTextFieldRoleName.getText().trim());
+if(role != null){
+roleDao.update(role);
+displayDataToTable();
+JOptionPane.showMessageDialog(null, "Data updated successfully!");
+}else{
+JOptionPane.showMessageDialog(null, "Enter Valid Name or ID!");
+
+}
 
     }//GEN-LAST:event_jButtonUpdateActionPerformed
 
@@ -251,6 +262,7 @@ public class RoleView extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(RoleView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -266,8 +278,10 @@ public class RoleView extends javax.swing.JFrame {
     private javax.swing.JButton jButtonUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableDisplay;
+    private javax.swing.JTextField jTextFieldId;
     private javax.swing.JTextField jTextFieldRoleName;
     // End of variables declaration//GEN-END:variables
 }
