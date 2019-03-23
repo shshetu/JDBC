@@ -32,7 +32,7 @@ public class LoginView extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jTextFieldUserName = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextFieldUserName1 = new javax.swing.JTextField();
+        jTextFieldPassword = new javax.swing.JTextField();
         jButtonExit = new javax.swing.JButton();
         jButtonLogin = new javax.swing.JButton();
 
@@ -65,11 +65,16 @@ public class LoginView extends javax.swing.JFrame {
         jLabel2.setText("User Name:");
 
         jTextFieldUserName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextFieldUserName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldUserNameActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("Password:");
 
-        jTextFieldUserName1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextFieldPassword.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         jButtonExit.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButtonExit.setText("Exit");
@@ -104,7 +109,7 @@ public class LoginView extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addGap(56, 56, 56)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldUserName1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
@@ -120,7 +125,7 @@ public class LoginView extends javax.swing.JFrame {
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextFieldUserName1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonExit)
@@ -134,6 +139,10 @@ public class LoginView extends javax.swing.JFrame {
     private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
        System.exit(0);
     }//GEN-LAST:event_jButtonExitActionPerformed
+
+    private void jTextFieldUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldUserNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldUserNameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -177,7 +186,7 @@ public class LoginView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField jTextFieldPassword;
     private javax.swing.JTextField jTextFieldUserName;
-    private javax.swing.JTextField jTextFieldUserName1;
     // End of variables declaration//GEN-END:variables
 }

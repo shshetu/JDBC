@@ -28,11 +28,11 @@ public class RoleDaoImp implements RoleDao {
     @Override
     public void createTable() {
         //make query
-        String sql = "create table if not exists employees(id int(11) primary key, role_name varchar(20))";
+        String sql = "create table if not exists role(id int(11) primary key, role_name varchar(20))";
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.execute();
-            System.out.println("employees table created successfully!");
+            System.out.println("role table created successfully!");
         } catch (SQLException ex) {
             Logger.getLogger(RoleDaoImp.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -42,14 +42,14 @@ public class RoleDaoImp implements RoleDao {
     @Override
     public void insert(Role role) {
         //make query
-        String sql = "insert into employees values(?,?)";
+        String sql = "insert into role values(?,?)";
         PreparedStatement pstm;
         try {
             pstm = conn.prepareStatement(sql);
             pstm.setInt(1, role.getId());
             pstm.setString(2, role.getRoleName());
             pstm.executeUpdate();
-            System.out.println("Data inserted into employees table successfully!");
+            System.out.println("Data inserted into role table successfully!");
         } catch (SQLException ex) {
             Logger.getLogger(RoleDaoImp.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -58,13 +58,13 @@ public class RoleDaoImp implements RoleDao {
     @Override
     public void update(Role role) {
         //make query
-        String sql = "update employees set role_name = ? where id = ?";
+        String sql = "update role set role_name = ? where id = ?";
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setString(1, role.getRoleName());
             pstm.setInt(2, role.getId());
             pstm.executeUpdate();
-            System.out.println("Data updated into employees table successfully!");
+            System.out.println("Data updated into role table successfully!");
         } catch (SQLException ex) {
             Logger.getLogger(RoleDaoImp.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -74,12 +74,12 @@ public class RoleDaoImp implements RoleDao {
     public void delete(Role role) {
 
         //make query
-        String sql = "delete from employees where id = ?";
+        String sql = "delete from role where id = ?";
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setInt(1, role.getId());
             pstm.executeUpdate();
-            System.out.println("Deleted from employees table successfully!");
+            System.out.println("Deleted from role table successfully!");
         } catch (SQLException ex) {
             Logger.getLogger(RoleDaoImp.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -90,7 +90,7 @@ public class RoleDaoImp implements RoleDao {
         Role role = null;
         try {
 
-            String sql = "select * from employees where id = ?";
+            String sql = "select * from role where id = ?";
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setInt(1, id);
             ResultSet rs = pstm.executeQuery();
@@ -110,7 +110,7 @@ public class RoleDaoImp implements RoleDao {
 Role role = null;
         try {
 
-            String sql = "select * from employees where role_name = ?";
+            String sql = "select * from role where role_name = ?";
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setString(1, roleName);
             ResultSet rs = pstm.executeQuery();
@@ -129,7 +129,7 @@ Role role = null;
         List<Role> list = new ArrayList<Role>();
         try {
 
-            String sql = "select * from employees";
+            String sql = "select * from role";
             PreparedStatement pstm = conn.prepareStatement(sql);
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {

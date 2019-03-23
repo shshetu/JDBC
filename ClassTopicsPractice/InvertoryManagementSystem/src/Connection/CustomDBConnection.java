@@ -20,8 +20,8 @@ public class CustomDBConnection {
     public static Connection getConnection() {
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/shetu", "root", "1234");
-            System.out.println("Connected to the database shetu!");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/roleview", "root", "1234");
+            System.out.println("Connected to the database roleview!");
         } catch (SQLException ex) {
             Logger.getLogger(CustomDBConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
