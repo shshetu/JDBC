@@ -5,6 +5,15 @@
  */
 package View;
 
+import Dao.RoleDao;
+import Dao.UserDao;
+import DaoImp.RoleDaoImp;
+import DaoImp.UserDaoImp;
+import Pojo.Role;
+import Pojo.User;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author User
@@ -16,6 +25,40 @@ public class UserView extends javax.swing.JFrame {
      */
     public UserView() {
         initComponents();
+        new UserDaoImp().createTable();
+        displayDataIntoTable();
+        displayDataAtComboBox();
+
+    }
+  public void displayDataAtComboBox(){
+  RoleDao roleDao = new RoleDaoImp();
+  List<Role> list = roleDao.getRoles();
+  for(Role role: list){
+  jComboBoxRoleName.addItem(role.getRoleName());
+  }
+  }
+
+    public void displayDataIntoTable() {
+        clearTable();
+        UserDao userDao = new UserDaoImp();
+        DefaultTableModel model = (DefaultTableModel) jTableUserView.getModel();
+        List<User> list = userDao.getUsers();
+        Object[] cols = new Object[6];
+        for (int i = 0; i < list.size(); i++) {
+            cols[0] = list.get(i).getId();
+            cols[1] = list.get(i).getFullName();
+            cols[2] = list.get(i).getUserName();
+            cols[3] = list.get(i).getPassword();
+            cols[4] = list.get(i).getMobile();
+            Role role = new RoleDaoImp().getRoleById(list.get(i).getRole().getId());
+            cols[5] = role.getRoleName();
+            model.addRow(cols);
+        }
+    }
+
+    public void clearTable() {
+        DefaultTableModel model = (DefaultTableModel) jTableUserView.getModel();
+        model.setRowCount(0);
     }
 
     /**
@@ -81,6 +124,11 @@ public class UserView extends javax.swing.JFrame {
                 "Id", "Full Name", "Username", "Password", "Mobile", "Rolename"
             }
         ));
+        jTableUserView.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableUserViewMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableUserView);
 
         jTextFieldFullName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -107,9 +155,19 @@ public class UserView extends javax.swing.JFrame {
 
         jButtonInsert.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButtonInsert.setText("Insert");
+        jButtonInsert.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonInsertActionPerformed(evt);
+            }
+        });
 
         jButtonUpdate.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButtonUpdate.setText("Update");
+        jButtonUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUpdateActionPerformed(evt);
+            }
+        });
 
         jButtonDelete.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButtonDelete.setText("Delete");
@@ -213,6 +271,39 @@ public class UserView extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_jButtonExitActionPerformed
+
+    private void jButtonInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInsertActionPerformed
+        RoleDao roleDao = new RoleDaoImp();
+        UserDao userDao = new UserDaoImp();
+       String selectRole = jComboBoxRoleName.getItemAt(jComboBoxRoleName.getSelectedIndex());
+       Role role = roleDao.getRoleByRoleName(selectRole.trim());
+       User user = new User(jTextFieldFullName.getText(), jTextFieldUsername.getText(), jTextFieldPassword.getText(), jTextFieldMobile.getText(), role);
+       userDao.insert(user);
+       displayDataIntoTable();
+       displayDataAtComboBox();
+    }//GEN-LAST:event_jButtonInsertActionPerformed
+
+    private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
+        UserDao userDao = new UserDaoImp();
+        String fullName = jTextFieldFullName.getText().trim();
+        String userName = jTextFieldUsername.getText().trim();
+        String password = jTextFieldPassword.getText().trim();
+        String mobile = jTextFieldMobile.getText().trim();
+       
+ 
+        
+    }//GEN-LAST:event_jButtonUpdateActionPerformed
+    private int selectedId;
+    private void jTableUserViewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUserViewMouseClicked
+    DefaultTableModel model = (DefaultTableModel) jTableUserView.getModel();
+    int i = jTableUserView.getSelectedRow();
+    jComboBoxRoleName.addItem(model.getValueAt(i, 5).toString().trim());
+    jTextFieldFullName.setText(model.getValueAt(i, 1).toString().trim());
+    jTextFieldUsername.setText(model.getValueAt(i, 2).toString().trim());
+    jTextFieldPassword.setText(model.getValueAt(i, 3).toString().trim());
+    jTextFieldMobile.setText(model.getValueAt(i, 4).toString().trim());
+    selectedId = Integer.parseInt(model.getValueAt(i, 0).toString().trim());
+    }//GEN-LAST:event_jTableUserViewMouseClicked
 
     /**
      * @param args the command line arguments

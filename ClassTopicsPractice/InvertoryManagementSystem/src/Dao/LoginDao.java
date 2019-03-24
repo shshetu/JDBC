@@ -9,6 +9,6 @@ package Dao;
  *
  * @author User
  */
-public interface Login {
-    
+public interface LoginDao {
+    User findByUsernameAndPassword(String username,String password);
 }
