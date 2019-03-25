@@ -5,6 +5,19 @@
  */
 package View;
 
+import Dao.ProductCategoryDao;
+import Dao.ProductPurchaseDao;
+import DaoImp.ProductCategoryDaoImp;
+import DaoImp.ProductPurchaseDaoImp;
+import Pojo.ProductCategory;
+import Pojo.ProductPurchase;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author User
@@ -16,6 +29,43 @@ public class ProductPurchaseView extends javax.swing.JFrame {
      */
     public ProductPurchaseView() {
         initComponents();
+        new ProductPurchaseDaoImp().createTable();
+        diplayProductPurchaseIntoTable();
+        displayCategoryNameAtComboBox();
+    }
+
+    public void displayCategoryNameAtComboBox() {
+        ProductCategoryDao dao = new ProductCategoryDaoImp();
+        List<ProductCategory> list = dao.getProductCategory();
+        for (ProductCategory p : list) {
+            jComboBoxProductCategory.addItem(p.getId() + " " + p.getCatName());
+        }
+    }
+
+    public void diplayProductPurchaseIntoTable() {
+        clearTable();
+        ProductCategoryDao p = new ProductCategoryDaoImp();
+        ProductPurchaseDao pd = new ProductPurchaseDaoImp();
+        DefaultTableModel model = (DefaultTableModel) jTableProductPurchaseView.getModel();
+        List<ProductPurchase> list = pd.getProductPurchase();
+        Object[] cols = new Object[7];
+
+        for (int i = 0; i < list.size(); i++) {
+            cols[0] = list.get(i).getId();
+            cols[1] = list.get(i).getProductName();
+            cols[2] = list.get(i).getProductCategory();
+            cols[3] = list.get(i).getUnitPrice();
+            cols[4] = list.get(i).getQuantity();
+            cols[5] = list.get(i).getTotalPrice();
+            ProductCategory pc = p.getProductCategoryById(list.get(i).getProductCategory().getId()); //product category is selected from product category class 
+            cols[6] = pc.getCatName();
+            model.addRow(cols);
+        }
+    }
+
+    public void clearTable() {
+        DefaultTableModel model = (DefaultTableModel) jTableProductPurchaseView.getModel();
+        model.setRowCount(0);
     }
 
     /**
@@ -44,6 +94,7 @@ public class ProductPurchaseView extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jComboBoxProductCategory = new javax.swing.JComboBox<>();
         jButtonPurchase = new javax.swing.JButton();
+        jButtonExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -111,6 +162,19 @@ public class ProductPurchaseView extends javax.swing.JFrame {
 
         jButtonPurchase.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButtonPurchase.setText("Purchase");
+        jButtonPurchase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPurchaseActionPerformed(evt);
+            }
+        });
+
+        jButtonExit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButtonExit.setText("Exit");
+        jButtonExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -119,42 +183,41 @@ public class ProductPurchaseView extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(13, 13, 13)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(77, 77, 77))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(38, 38, 38)))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addGap(38, 38, 38)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(65, 65, 65)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextFieldProductCode, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-                            .addComponent(jTextFieldQuantity)
-                            .addComponent(jTextFieldProductName)
-                            .addComponent(jTextFieldTotalPrice)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel2))
+                                    .addComponent(jLabel6))
+                                .addGap(38, 38, 38)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextFieldProductCode, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                                    .addComponent(jTextFieldProductName)
+                                    .addComponent(jTextFieldTotalPrice)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(jComboBoxProductCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(4, 4, 4)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5))
+                                .addGap(68, 68, 68)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldQuantity)
+                                    .addComponent(jTextFieldUnitPrice))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(jLabel4)
-                        .addGap(68, 68, 68)
-                        .addComponent(jTextFieldUnitPrice))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonPurchase)
-                            .addComponent(jComboBoxProductCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                        .addComponent(jButtonPurchase)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonExit)
+                        .addGap(196, 196, 196))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,26 +238,57 @@ public class ProductPurchaseView extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(jTextFieldUnitPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(7, 7, 7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(jTextFieldQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(21, 21, 21)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(jTextFieldTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
                             .addComponent(jComboBoxProductCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(62, 62, 62)
-                .addComponent(jButtonPurchase)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonExit))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jButtonPurchase)))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
+        System.exit(0);
+
+
+    }//GEN-LAST:event_jButtonExitActionPerformed
+
+    private void jButtonPurchaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPurchaseActionPerformed
+        ProductPurchaseDao pd = new ProductPurchaseDaoImp();
+        DefaultTableModel model = (DefaultTableModel) jTableProductPurchaseView.getModel();
+        //take category id from combo box
+        int catId = Integer.parseInt(jComboBoxProductCategory.getItemAt(jComboBoxProductCategory.getSelectedIndex()).trim().substring(0,2).trim());
+        //all the values
+        String productName = jTextFieldProductName.getText().trim();
+        String productCode = jTextFieldProductCode.getText().trim();
+        double unitPrice = Double.parseDouble(jTextFieldUnitPrice.getText().trim());
+        int quantity = Integer.parseInt(jTextFieldQuantity.getText().trim());
+        double totalPrice = unitPrice*quantity;
+        LocalDate todayLocalDate = LocalDate.now(ZoneId.of("America/Montreal"));
+        java.sql.Date sqlDate = java.sql.Date.valueOf(todayLocalDate);
+        ProductCategory pcat = new ProductCategory(catId);
+        ProductPurchase ppc = new ProductPurchase(productName, productCode, unitPrice, quantity, totalPrice, sqlDate, pcat);
+        pd.insert(ppc);
+        JOptionPane.showMessageDialog(null,"Data Successfully inserted into productpurchase table!");
+        diplayProductPurchaseIntoTable();
+    }//GEN-LAST:event_jButtonPurchaseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -232,6 +326,7 @@ public class ProductPurchaseView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonExit;
     private javax.swing.JButton jButtonPurchase;
     private javax.swing.JComboBox<String> jComboBoxProductCategory;
     private javax.swing.JLabel jLabel1;

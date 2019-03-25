@@ -5,6 +5,14 @@
  */
 package View;
 
+import Dao.LoginDao;
+import Dao.RoleDao;
+import DaoImp.LoginDaoImp;
+import DaoImp.RoleDaoImp;
+import Pojo.Role;
+import Pojo.User;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author User
@@ -86,6 +94,11 @@ public class LoginView extends javax.swing.JFrame {
 
         jButtonLogin.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButtonLogin.setText("Login");
+        jButtonLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLoginActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -137,12 +150,43 @@ public class LoginView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
-       System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_jButtonExitActionPerformed
 
     private void jTextFieldUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldUserNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldUserNameActionPerformed
+
+    private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
+        RoleDao roleDao = new RoleDaoImp();
+        LoginDao loginDao = new LoginDaoImp();
+        String usr = jTextFieldUserName.getText().trim();
+        String pass = jTextFieldPassword.getText().trim();
+        if (usr.length() > 1 || pass.length() > 1) {
+            try {
+
+                User user = loginDao.findByUsernameAndPassword(usr, pass);
+                //validation
+                if (user.getUserName() != null) {
+                    Role role = roleDao.getRoleById(user.getId());
+                    if (role.getRoleName().equalsIgnoreCase("admin")) {
+                        this.setVisible(false);
+                        new ProductCategoryView().setVisible(true);
+                    } else {
+
+                        this.setVisible(false);
+                        new ProductCategoryView().setVisible(true);
+                    }
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Invalid Username or password!");
+
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Enter Username and password!");
+
+        }
+    }//GEN-LAST:event_jButtonLoginActionPerformed
 
     /**
      * @param args the command line arguments

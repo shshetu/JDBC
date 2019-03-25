@@ -5,10 +5,12 @@
  */
 package Dao;
 
+import Pojo.User;
+
 /**
  *
  * @author User
  */
 public interface LoginDao {
-    User findByUsernameAndPassword(String username,String password);
+     User findByUsernameAndPassword(String username,String password);
 }

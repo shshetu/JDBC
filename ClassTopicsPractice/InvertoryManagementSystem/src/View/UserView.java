@@ -30,13 +30,15 @@ public class UserView extends javax.swing.JFrame {
         displayDataAtComboBox();
 
     }
-  public void displayDataAtComboBox(){
-  RoleDao roleDao = new RoleDaoImp();
-  List<Role> list = roleDao.getRoles();
-  for(Role role: list){
-  jComboBoxRoleName.addItem(role.getRoleName());
-  }
-  }
+
+    public void displayDataAtComboBox() {
+        RoleDao roleDao = new RoleDaoImp();
+        List<Role> list = roleDao.getRoles();
+        jComboBoxRoleName.addItem("Select A Role");
+        for (Role role : list) {
+            jComboBoxRoleName.addItem(role.getRoleName());
+        }
+    }
 
     public void displayDataIntoTable() {
         clearTable();
@@ -171,6 +173,11 @@ public class UserView extends javax.swing.JFrame {
 
         jButtonDelete.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButtonDelete.setText("Delete");
+        jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteActionPerformed(evt);
+            }
+        });
 
         jButtonExit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButtonExit.setText("Exit");
@@ -275,12 +282,12 @@ public class UserView extends javax.swing.JFrame {
     private void jButtonInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInsertActionPerformed
         RoleDao roleDao = new RoleDaoImp();
         UserDao userDao = new UserDaoImp();
-       String selectRole = jComboBoxRoleName.getItemAt(jComboBoxRoleName.getSelectedIndex());
-       Role role = roleDao.getRoleByRoleName(selectRole.trim());
-       User user = new User(jTextFieldFullName.getText(), jTextFieldUsername.getText(), jTextFieldPassword.getText(), jTextFieldMobile.getText(), role);
-       userDao.insert(user);
-       displayDataIntoTable();
-       displayDataAtComboBox();
+        String selectRole = jComboBoxRoleName.getItemAt(jComboBoxRoleName.getSelectedIndex());
+        Role role = roleDao.getRoleByRoleName(selectRole.trim());
+        User user = new User(jTextFieldFullName.getText(), jTextFieldUsername.getText(), jTextFieldPassword.getText(), jTextFieldMobile.getText(), role);
+        userDao.insert(user);
+        displayDataIntoTable();
+        displayDataAtComboBox();
     }//GEN-LAST:event_jButtonInsertActionPerformed
 
     private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
@@ -289,21 +296,24 @@ public class UserView extends javax.swing.JFrame {
         String userName = jTextFieldUsername.getText().trim();
         String password = jTextFieldPassword.getText().trim();
         String mobile = jTextFieldMobile.getText().trim();
-       
- 
-        
+
+
     }//GEN-LAST:event_jButtonUpdateActionPerformed
     private int selectedId;
     private void jTableUserViewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUserViewMouseClicked
-    DefaultTableModel model = (DefaultTableModel) jTableUserView.getModel();
-    int i = jTableUserView.getSelectedRow();
-    jComboBoxRoleName.addItem(model.getValueAt(i, 5).toString().trim());
-    jTextFieldFullName.setText(model.getValueAt(i, 1).toString().trim());
-    jTextFieldUsername.setText(model.getValueAt(i, 2).toString().trim());
-    jTextFieldPassword.setText(model.getValueAt(i, 3).toString().trim());
-    jTextFieldMobile.setText(model.getValueAt(i, 4).toString().trim());
-    selectedId = Integer.parseInt(model.getValueAt(i, 0).toString().trim());
+        DefaultTableModel model = (DefaultTableModel) jTableUserView.getModel();
+        int i = jTableUserView.getSelectedRow();
+        jComboBoxRoleName.setSelectedItem(model.getValueAt(i, 5).toString().trim());
+        jTextFieldFullName.setText(model.getValueAt(i, 1).toString().trim());
+        jTextFieldUsername.setText(model.getValueAt(i, 2).toString().trim());
+        jTextFieldPassword.setText(model.getValueAt(i, 3).toString().trim());
+        jTextFieldMobile.setText(model.getValueAt(i, 4).toString().trim());
+        selectedId = Integer.parseInt(model.getValueAt(i, 0).toString().trim());
     }//GEN-LAST:event_jTableUserViewMouseClicked
+
+    private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonDeleteActionPerformed
 
     /**
      * @param args the command line arguments
